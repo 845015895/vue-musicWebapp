@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+//当前UI标准大小
+$size: 375;
+
+//计算实际大小
+@function px($px) {
+  $t: 20 / $size * $px;
+  @return unquote($t + 'rem')
+}
+
+//计算百分比
+@function percent($p) {
+  $t: $p / $size * 100;
+  @return unquote($t +'%');
+}
