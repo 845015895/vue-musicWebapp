@@ -7,6 +7,7 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+let vConsolePlugin = require('vconsole-webpack-plugin');
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -49,6 +50,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true
+    }),
+    new vConsolePlugin({
+      enable: process.env.NODE_ENV !== 'production' // 发布代码前记得改回 false
+      // enable: false
     }),
   ]
 })

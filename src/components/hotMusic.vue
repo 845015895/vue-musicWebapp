@@ -12,7 +12,7 @@
 
       </div>
       <ul class="musicList">
-        <li v-for="(item,index) in songList" v-on:click="showMiniRadio(index)">
+        <li v-for="(item,index) in songList" v-on:click=" showMiniRadio(index)">
           <div :class="{top:index<3}" class="topNum">
             {{index < 9 ? "0" + (index + 1) : index + 1}}
           </div>
@@ -52,8 +52,7 @@
       width: px(180);
       height: px(80);
       background: url("../assets/index.png") no-repeat;
-      background-size: px(200) px(120);
-      background-position: -24px -55px;
+      background-size: contain;
     }
     .updateDate{
       color: #fff;
@@ -114,7 +113,8 @@
         date: "",
         showMini: false,
         musicId: "",
-        musicUrl: ""
+        musicUrl: "",
+        indexObj:""
       }
     },
     components: {
@@ -125,6 +125,18 @@
 
     },
     mounted: function () {
+      let self = this;
+      this.$root.$on("index",function (index) {
+          self.indexObj = index;
+        if(self.indexObj.isHot === true){
+          if (self.indexObj.index >= self.songList.length) {
+            self.indexObj.index = 0;
+          }
+          self.showMiniRadio(self.indexObj.index);
+        }
+      });
+
+
     },
     methods: {
 
@@ -157,9 +169,11 @@
           url: `/yy/index.php?r=play/getdata&hash=${self.musicId}`,
           dataType: "json",
           success: function (res) {
-            self.$root.$emit("musicUrl",res.data.play_url);
             self.$root.$emit("showMini",true);
-            self.$root.$emit("singerImg",res.data.img)
+            self.$root.$emit("data",res.data);
+            self.$root.$emit("index",index);
+            let audio = new Audio();
+            audio.load();
           },
           error: function (err) {
 

@@ -2,9 +2,24 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <!--百度禁止转码-->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--添加到主屏后的标题（IOS）-->
+    <meta name="apple-mobile-web-app-title" content="橙子音乐">
+    <!--启用 WebApp 全屏模式（IOS）-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <!--设置状态栏的背景颜色（IOS）设置状态栏的背景颜色，只有在 ”apple-mobile-web-app-capable” content=”yes” 时生效-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>橙子音乐</title>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
   </head>
+  <style>
+    html {
+      　　-webkit-text-size-adjust: 100%;
+    }
+  </style>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
