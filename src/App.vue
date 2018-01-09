@@ -70,7 +70,7 @@
         self.isActive2 = false;
         self.isActive3 = true;
 //        self.isActive4 = false;
-        self.$router.push("mine");
+        self.$router.push("search");
       });
 //      $("#tab4").click(function () {
 //        self.isActive1 = false;

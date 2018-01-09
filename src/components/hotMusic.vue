@@ -18,7 +18,7 @@
           </div>
           <div class="songList">
             <p>{{item.filename.split("-")[1]}}</p>
-            <p>{{item.filename.split("-")[0] + "- "}}{{item.remark?item.remark :item.filename.split("-")[1]}}</p>
+            <p>{{item.filename.split("-")[0] + "- "}}{{item.remark ? item.remark : item.filename.split("-")[1]}}</p>
           </div>
 
         </li>
@@ -54,7 +54,7 @@
       background: url("../assets/index.png") no-repeat;
       background-size: contain;
     }
-    .updateDate{
+    .updateDate {
       color: #fff;
       font-size: px(16);
     }
@@ -114,7 +114,8 @@
         showMini: false,
         musicId: "",
         musicUrl: "",
-        indexObj:""
+        indexObj: "",
+        component: ""
       }
     },
     components: {
@@ -126,17 +127,15 @@
     },
     mounted: function () {
       let self = this;
-      this.$root.$on("index",function (index) {
-          self.indexObj = index;
-        if(self.indexObj.isHot === true){
+      this.$root.$on("indexData", function (index) {
+        self.indexObj = index;
+        if (self.indexObj.component === "hot") {
           if (self.indexObj.index >= self.songList.length) {
             self.indexObj.index = 0;
           }
           self.showMiniRadio(self.indexObj.index);
         }
       });
-
-
     },
     methods: {
 
@@ -149,7 +148,7 @@
           success: function (data) {
             self.songList = data.songs.list;
             self.showLoading = false;
-            self.date = self.getLocalTime(data.songs.timestamp).substring(0,10);
+            self.date = self.getLocalTime(data.songs.timestamp).substring(0, 10);
           },
           error: function (err) {
 
@@ -169,9 +168,10 @@
           url: `/yy/index.php?r=play/getdata&hash=${self.musicId}`,
           dataType: "json",
           success: function (res) {
-            self.$root.$emit("showMini",true);
-            self.$root.$emit("data",res.data);
-            self.$root.$emit("index",index);
+            self.$root.$emit("showMini", true);
+            self.$root.$emit("data", res.data);
+            self.$root.$emit("index", index);
+            self.$root.$emit("component", "hot");
             let audio = new Audio();
             audio.load();
           },

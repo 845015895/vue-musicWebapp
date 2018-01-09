@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import recommend from '../components/recommend.vue'
 import hotMusic from '../components/hotMusic.vue'
-import newMusic from '../components/newMusic.vue'
-import mine from '../components/mine.vue'
+import search from '../components/search.vue'
 
 
 Vue.use(Router);
@@ -23,12 +22,8 @@ export default new Router({
       component:hotMusic
     },
     {
-      path: '/newMusic',
-      component:newMusic
-    },
-    {
-      path: '/mine',
-      component:mine
+      path: '/search',
+      component:search
     },
 
 

@@ -6,7 +6,7 @@
     <div v-show="showImg >= 6 && getNewList === true">
       <h3 class="newTitle">推荐音乐</h3>
       <ul class="soaringList" v-if="showImg>=6">
-        <li v-for="(item,index) in SoaringSongList">
+        <li v-for="(item,index) in soaringSongList" v-on:click="playSoarSong(index,soaringSongList);">
           <!--<img :src="{item.img}" alt="">-->
           <div :style="{background:`url(${item.imgUrl})`,backgroundSize:`cover` } " class="soaringImg"></div>
           <p>{{item.filename}}</p>
@@ -14,7 +14,7 @@
       </ul>
       <h3 class="newTitle">最新音乐</h3>
       <ul class="newList">
-        <li v-for="(item,index) in songList">
+        <li v-for="(item,index) in songList" v-on:click="playNewMusic(index, songList);">
           <div class="songList">
             <p>{{item.filename.split("-")[1]}}</p>
             <p>{{item.filename.split("-")[0] + "- " + item.remark}}</p>
@@ -108,10 +108,12 @@
       return {
         data: "",
         songList: "",
-        SoaringSongList: "",
+        soaringSongList: "",
+        newSongInfo: {},
         showImg: 0,
         getNewList: false,
-        showLoading: true
+        showLoading: true,
+
       }
     },
     created: function () {
@@ -119,10 +121,25 @@
       this.getNewData();
     },
     mounted: function () {
-
-      if(this.showImg >= 6 && this.getNewList === true){
-        this.showLoading = false;
+      let self = this;
+      if(self.showImg >= 6 && self.getNewList === true){
+        self.showLoading = false;
       }
+
+      this.$root.$on("indexData", function (index) {
+        self.indexObj = index;
+        if (self.indexObj.component === "soar") {
+          if (self.indexObj.index >= self.soaringSongList.length) {
+            self.indexObj.index = 0;
+          }
+          self.playSoarSong(self.indexObj.index,self.soaringSongList);
+        } else if (self.indexObj.component === "new") {
+          if (self.indexObj.index >= self.songList.length) {
+            self.indexObj.index = 0;
+          }
+          self.playNewMusic(self.indexObj.index,self.songList);
+        }
+      });
     },
     methods:{
       getSoaringData: function(){
@@ -134,9 +151,9 @@
           dataType: "json",
           success : function (data) {
             self.data = data.songs;
-            self.SoaringSongList = self.data.list.slice(0,6);
-            for(let i = 0;i< self.SoaringSongList.length;i++){
-              self.getImg(self.SoaringSongList[i].hash,self.SoaringSongList[i]);
+            self.soaringSongList = self.data.list.slice(0,6);
+            for(let i = 0;i< self.soaringSongList.length;i++){
+              self.getSoaringMusicInfo(self.soaringSongList[i].hash,self.soaringSongList[i]);
             }
 
           },
@@ -144,26 +161,32 @@
 
           }
         });
-
-
-
       },
-      getImg: function(hash,SoaringSongList){
+      getSoaringMusicInfo: function(hash,soaringSongList){
         let self = this;
         $.ajax({
           type: "get",
           url: `/app/i/getSongInfo.php?cmd=playInfo&hash=${hash}`,
           dataType: "json",
           success : function (data) {
-           SoaringSongList.imgUrl = data.imgUrl.replace("{size}","200");
+           soaringSongList.imgUrl = data.imgUrl.replace("{size}","200");
+           soaringSongList.musicUrl = data.url;
             self.showImg += 1;
+
           },
           error: function (err) {
             console.log(err);
           }
         });
       },
-
+      playSoarSong: function (index,songList) {
+        let self =this;
+        this.$root.$emit("data",{"play_url":songList[index].musicUrl,"img":songList[index].imgUrl,
+        "song_name":songList[index].filename.split("-")[1],"audio_name":songList[index].filename.split("-")[0]});
+        self.$root.$emit("showMini",true);
+        self.$root.$emit("index",index);
+        self.$root.$emit("component", "soar");
+      },
       getNewData: function() {
         let self =this;
         $.ajax({
@@ -180,6 +203,33 @@
           }
 
         })
+      },
+      playNewMusic: function (index,songList) {
+        let self = this;
+        let hash = songList[index].hash;
+        $.ajax({
+          type: "get",
+          url: `/app/i/getSongInfo.php?cmd=playInfo&hash=${hash}`,
+          dataType: "json",
+          success : function (data) {
+            self.newSongInfo.imgUrl = data.imgUrl.replace("{size}","200");
+            self.newSongInfo.musicUrl = data.url;
+            self.newSongInfo.filename = data.fileName;
+
+
+            self.postNewInfo(index,self.newSongInfo);
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      },
+      postNewInfo: function (index,newSongInfo) {
+        this.$root.$emit("data",{"play_url":newSongInfo.musicUrl,"img":newSongInfo.imgUrl,
+          "song_name":newSongInfo.filename.split("-")[1],"audio_name":newSongInfo.filename.split("-")[0]});
+        this.$root.$emit("showMini",true);
+        this.$root.$emit("index",index);
+        this.$root.$emit("component", "new");
       }
 
     }

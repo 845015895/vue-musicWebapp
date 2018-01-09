@@ -21,8 +21,10 @@
     </div>
     <!--音乐播放器标签-->
     <!--<audio id="audio" v-bind:src="musicUrl" autoplay="autoplay" v-on:ended="musicEnd($event)"  v-on:canplay="canplaythrough">-->
-      <audio id="audio" v-on:ended="musicEnd($event)" v-bind:src="musicUrl" controlsList="nodownload" preload="auto"
-      v-on:canplay="canPlay()" autoplay="autoplay" v-on:play="isPlay()" >
+    <!--<audio id="audio" v-on:ended="musicEnd($event)" v-bind:src="musicUrl" controlsList="nodownload" preload="auto"-->
+    <!--v-on:canplay="canPlay()" autoplay="autoplay" v-on:play="isPlay()" >-->
+    <audio id="audio" v-on:ended="musicEnd($event)" v-bind:src="musicUrl" controlsList="nodownload" preload="auto"
+           autoplay="autoplay" v-on:play="isPlay()">
       亲 您的浏览器不支持html5的audio标签
     </audio>
   </div>
@@ -78,7 +80,7 @@
         background: url("../assets/pause_icon.png");
         background-size: cover;
       }
-      .nextBtn{
+      .nextBtn {
         margin-left: px(15);
         background: url("../assets/next_icon.png");
         background-size: cover;
@@ -92,6 +94,7 @@
 </style>
 <script>
   import $ from "jquery";
+
   export default {
     data() {
       return {
@@ -105,7 +108,8 @@
         currentIndex: "",
         musicId: "",
         songList: "",
-        isHot: false,
+        //是哪一版块来的数据
+        component: false,
         index: ""
 
       }
@@ -118,12 +122,9 @@
       this.$root.$on("songList", function (songList) {
         self.songList = songList;
       });
-      this.$root.$on("musicUrl", function (musicUrl) {
-        self.musicUrl = musicUrl;
-      });
 
-      this.$root.$on("isHot", function (isHot) {
-        self.isHot = isHot;
+      this.$root.$on("component", function (component) {
+        self.component = component;
       });
       this.$root.$on("showMini", function (showMini) {
         self.showMini = showMini;
@@ -131,16 +132,13 @@
       this.$root.$on("index", function (index) {
         self.index = index;
       });
-
-
       this.$root.$on("data", function (data) {
         self.musicUrl = data.play_url;
         self.singerImg = data.img;
         self.songName = data.song_name;
         self.authorName = data.audio_name.split("-")[0];
-
-
       });
+
 
     },
     methods: {
@@ -164,14 +162,26 @@
         }
       },
       next: function () {
+
         let self = this;
         ++self.currentIndex;
-        this.$root.$emit("index",{"isHot":true,"index":self.currentIndex});
+        switch (self.component) {
+          case "hot":
+            this.$root.$emit( "indexData",{"component":"hot","index":self.currentIndex});
+            break;
+          case "soar":
+            this.$root.$emit( "indexData",{"component":"soar","index":self.currentIndex});
+            break;
+          case "new":
+            this.$root.$emit( "indexData",{"component":"new","index":self.currentIndex});
+            break;
+        }
+
       },
-      canPlay: function () {
-        this.play();
-        console.log("可以开始")
-      },
+//      canPlay: function () {
+//        this.play();
+//        console.log("可以开始")
+//      },
       isPlay: function () {
         this.isPlaying = true;
       },
@@ -181,9 +191,20 @@
         self.isPlaying = false;
         audio.currentTime = 0;
         ++self.currentIndex;
-        this.$root.$emit("index",{"isHot":true,"index":self.currentIndex});
+        switch (self.component) {
+          case "hot":
+            this.$root.$emit( "indexData",{"component":"hot","index":self.currentIndex});
+            break;
+          case "soar":
+            this.$root.$emit( "indexData",{"component":"soar","index":self.currentIndex});
+            break;
+          case "new":
+            this.$root.$emit( "indexData",{"component":"new","index":self.currentIndex});
+            break;
+        }
       },
+
     }
 //  props: ["musicUrl"]
-}
+  }
 </script>
