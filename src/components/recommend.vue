@@ -69,7 +69,7 @@
   .newTitle{
     margin-top: px(15);
     box-sizing: border-box;
-    font-size: px(20);
+    font-size: px(18);
     padding-left: px(10);
     font-weight: normal;
     border-left: px(3) solid #df3436;
@@ -87,6 +87,10 @@
     height: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid rgba(0,0,0,.1);
+
+    p:nth-child(1){
+      font-size: px(18);
+    }
 
     p:nth-child(2){
       margin-top: px(5);
@@ -119,6 +123,11 @@
     created: function () {
       this.getSoaringData();
       this.getNewData();
+//
+//      $('.soaringList').one('touchstart', function () {
+//        let audio = new Audio();
+//        audio.play();
+//      })
     },
     mounted: function () {
       let self = this;
@@ -230,6 +239,7 @@
         this.$root.$emit("showMini",true);
         this.$root.$emit("index",index);
         this.$root.$emit("component", "new");
+
       }
 
     }

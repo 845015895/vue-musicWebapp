@@ -40,7 +40,7 @@ module.exports = {
         target: ' http://www.kugou.com',
         changeOrigin:true,
         pathRewrite: {
-          '^/song_search_v2': '/song_search_v2'
+          '^/yy': '/yy'
         }
       },
     },

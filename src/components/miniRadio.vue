@@ -57,8 +57,12 @@
       width: px(170);
 
       .songName {
+        width: px(170);
         font-size: px(16);
         padding-bottom: px(5);
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
       }
       .authorName {
         font-size: px(13);
@@ -98,7 +102,7 @@
   export default {
     data() {
       return {
-        musicUrl: "",
+        musicUrl: "http://fs.open.kugou.com/b2100316346bffbccd900f4668e5cdd6/5a55690a/G045/M06/0E/10/DZQEAFZQoI-AN6ewABw4qcbGxf4961.mp3",
         show: false,
         showMini: false,
         singerImg: "",
@@ -115,7 +119,9 @@
       }
     },
     created() {
+
       let self = this;
+      console.log(self.musicUrl);
       this.$root.$on("index", function (index) {
         self.currentIndex = index;
       });
@@ -175,6 +181,9 @@
           case "new":
             this.$root.$emit( "indexData",{"component":"new","index":self.currentIndex});
             break;
+          case "search":
+            this.$root.$emit( "indexData",{"component":"search","index":self.currentIndex});
+            break;
         }
 
       },
@@ -200,6 +209,9 @@
             break;
           case "new":
             this.$root.$emit( "indexData",{"component":"new","index":self.currentIndex});
+            break;
+          case "search":
+            this.$root.$emit( "indexData",{"component":"search","index":self.currentIndex});
             break;
         }
       },

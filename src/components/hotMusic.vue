@@ -86,6 +86,10 @@
         box-sizing: border-box;
         border-bottom: 1px solid rgba(0, 0, 0, .1);
 
+        p:nth-child(1){
+          font-size: px(18);
+        }
+
         p:nth-child(2) {
           margin-top: px(5);
           font-size: px(14);
