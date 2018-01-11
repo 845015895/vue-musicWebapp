@@ -98,11 +98,12 @@
 </style>
 <script>
   import $ from "jquery";
+  import music from "../assets/music.mp3";
 
   export default {
     data() {
       return {
-        musicUrl: "http://fs.open.kugou.com/b2100316346bffbccd900f4668e5cdd6/5a55690a/G045/M06/0E/10/DZQEAFZQoI-AN6ewABw4qcbGxf4961.mp3",
+        musicUrl: "",
         show: false,
         showMini: false,
         singerImg: "",
@@ -121,7 +122,6 @@
     created() {
 
       let self = this;
-      console.log(self.musicUrl);
       this.$root.$on("index", function (index) {
         self.currentIndex = index;
       });
@@ -143,8 +143,12 @@
         self.singerImg = data.img;
         self.songName = data.song_name;
         self.authorName = data.audio_name.split("-")[0];
+//
       });
 
+
+    },
+    mounted: function () {
 
     },
     methods: {

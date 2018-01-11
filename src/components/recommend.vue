@@ -16,9 +16,10 @@
       <ul class="newList">
         <li v-for="(item,index) in songList" v-on:click="playNewMusic(index, songList);">
           <div class="songList">
-            <p>{{item.filename.split("-")[1]}}</p>
+            <p>{{item.songName ? item.songName : item.filename.split("-")[1]}}<span class="mark">{{item.intro !== "(undefined" ? item.intro : " "}}</span></p>
             <p>{{item.filename.split("-")[0] + "- " + item.remark}}</p>
           </div>
+          <div class="playImg"></div>
         </li>
       </ul>
     </div>
@@ -37,6 +38,7 @@
   .soaringList{
     width: 100%;
     overflow: hidden;
+
     li{
       list-style: none;
       margin-top: px(15);
@@ -67,7 +69,7 @@
     }
   }
   .newTitle{
-    margin-top: px(15);
+    margin-top: px(25);
     box-sizing: border-box;
     font-size: px(18);
     padding-left: px(10);
@@ -79,6 +81,11 @@
     list-style: none;
     padding-left: px(4);
     padding-top: px(20);
+    li{
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(0,0,0,.1);
+    }
   }
 
   .songList{
@@ -86,21 +93,42 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    border-bottom: 1px solid rgba(0,0,0,.1);
+
 
     p:nth-child(1){
-      font-size: px(18);
+      width: px(300);
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      font-size: px(16);
+      display: flex;
+
+      .mark{
+        color: #888;
+        margin-left: px(5);
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     p:nth-child(2){
       margin-top: px(5);
-      font-size: px(14);
+      font-size: px(13);
       color: #888;
       text-overflow: ellipsis;
       white-space: nowrap;
       width: px(300);
       overflow: hidden;
     }
+  }
+
+  .playImg{
+    width: px(25);
+    height: px(25);
+    padding: 0 px(10);
+    background: url("../assets/play.png") no-repeat;
+    background-size: contain;
   }
 </style>
 <script >
@@ -205,6 +233,15 @@
           success : function (data) {
             self.data = data.songs;
             self.songList = self.data.list;
+
+            for(let i = 0;i<self.songList.length;i++){
+              if(self.songList[i].filename.indexOf("【")){
+                self.songList[i].filename=self.songList[i].filename.replace("【","(");
+                self.songList[i].filename=self.songList[i].filename.replace("】",")");
+                self.songList[i].songName =  self.songList[i].filename.split("-")[1].split("(")[0];
+                self.songList[i].intro = "(" +  self.songList[i].filename.split("(")[1];
+                }
+            }
             self.getNewList = true;
           },
           error: function (err) {

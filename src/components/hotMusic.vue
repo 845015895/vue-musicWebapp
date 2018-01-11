@@ -7,8 +7,9 @@
       <div class="hotBanner">
         <div>
           <div class="hotTitle"></div>
-          <div class="updateDate">上次更新时间：{{date}}</div>
+          <div class="updateDate">更新日期：{{date}}</div>
         </div>
+        <div class="shadow"></div>
 
       </div>
       <ul class="musicList">
@@ -20,6 +21,7 @@
             <p>{{item.filename.split("-")[1]}}</p>
             <p>{{item.filename.split("-")[0] + "- "}}{{item.remark ? item.remark : item.filename.split("-")[1]}}</p>
           </div>
+          <div class="playImg"></div>
 
         </li>
       </ul>
@@ -40,23 +42,47 @@
 
   .hotBanner {
     width: 100%;
-    height: px(170);
-    background: url("../assets/hot_music.jpg") no-repeat;
+    height: px(150);
+    background-image: url("../assets/hot_music.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     align-items: center;
     padding-left: px(20);
     box-sizing: border-box;
+    position: relative;
 
-    .hotTitle {
+    .shadow{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: rgba(0,0,0,.2);
+      z-index: 1;
+    }
+    div:first-child{
+      position: relative;
       width: px(180);
       height: px(80);
-      background: url("../assets/index.png") no-repeat;
+      margin-top: px(-10);
+    }
+
+    .hotTitle {
+      width: px(140);
+      height: px(70);
+      background: url("../assets/index1.png") no-repeat;
       background-size: contain;
+      position: absolute;
+      z-index: 2;
+      top: 0;
     }
     .updateDate {
+      padding-top: px(10);
       color: #fff;
-      font-size: px(16);
+      font-size: px(13);
+      position: absolute;
+      z-index: 2;
     }
   }
 
@@ -68,6 +94,8 @@
       box-sizing: border-box;
       width: 100%;
       height: px(60);
+      align-items: center;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
 
       .topNum {
         width: px(30);
@@ -81,24 +109,38 @@
       }
       .songList {
         padding: px(6) px(10);
-        width: 100%;
+        width: px(300);
         height: 100%;
         box-sizing: border-box;
-        border-bottom: 1px solid rgba(0, 0, 0, .1);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
 
         p:nth-child(1){
-          font-size: px(18);
+          width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          font-size: px(16);
         }
 
         p:nth-child(2) {
           margin-top: px(5);
-          font-size: px(14);
+          font-size: px(13);
           color: #888;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: px(300);
+          width: 100%;
           overflow: hidden;
         }
+      }
+      .playImg{
+        width: px(25);
+        height: px(25);
+        padding: 0 px(10);
+        background: url("../assets/play.png") no-repeat;
+        background-size: contain;
       }
     }
   }
