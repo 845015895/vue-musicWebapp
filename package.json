@@ -1,5 +1,5 @@
 {
-  "name": "webapp",
+  "name": "musicwebapp",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "Orange-Yi <yizicheng@utimes.cc>",
@@ -66,5 +66,20 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".postcssrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/845015895/vue-musicWebapp.git"
+  },
+  "keywords": [
+    "音乐播放器",
+    "music",
+    "vue.webapp"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/845015895/vue-musicWebapp/issues"
+  },
+  "homepage": "https://github.com/845015895/vue-musicWebapp#readme"
 }
