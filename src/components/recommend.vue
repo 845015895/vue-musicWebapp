@@ -145,6 +145,7 @@
         showImg: 0,
         getNewList: false,
         showLoading: true,
+        lyrics: []
 
       }
     },
@@ -163,16 +164,23 @@
         self.showLoading = false;
       }
 
+
       this.$root.$on("indexData", function (index) {
         self.indexObj = index;
         if (self.indexObj.component === "soar") {
           if (self.indexObj.index >= self.soaringSongList.length) {
             self.indexObj.index = 0;
           }
+          if (self.indexObj.index < 0) {
+            self.indexObj.index = self.soaringSongList.length - 1;
+          }
           self.playSoarSong(self.indexObj.index,self.soaringSongList);
         } else if (self.indexObj.component === "new") {
           if (self.indexObj.index >= self.songList.length) {
             self.indexObj.index = 0;
+          }
+          if (self.indexObj.index < 0) {
+            self.indexObj.index = self.songList.length - 1;
           }
           self.playNewMusic(self.indexObj.index,self.songList);
         }
@@ -203,13 +211,12 @@
         let self = this;
         $.ajax({
           type: "get",
-          url: `/app/i/getSongInfo.php?cmd=playInfo&hash=${hash}`,
+          url: `/yy/index.php?r=play/getdata&hash=${hash}`,
           dataType: "json",
-          success : function (data) {
-           soaringSongList.imgUrl = data.imgUrl.replace("{size}","200");
-           soaringSongList.musicUrl = data.url;
+          success : function (res) {
+           soaringSongList.imgUrl = res.data.img;
+           soaringSongList.musicUrl = res.data.play_url;
             self.showImg += 1;
-
           },
           error: function (err) {
             console.log(err);
@@ -222,6 +229,7 @@
         "song_name":songList[index].filename.split("-")[1],"audio_name":songList[index].filename.split("-")[0]});
         self.$root.$emit("showMini",true);
         self.$root.$emit("index",index);
+        self.$root.$emit("hash",songList[index].hash);
         self.$root.$emit("component", "soar");
       },
       getNewData: function() {
@@ -255,12 +263,13 @@
         let hash = songList[index].hash;
         $.ajax({
           type: "get",
-          url: `/app/i/getSongInfo.php?cmd=playInfo&hash=${hash}`,
+          url: `/yy/index.php?r=play/getdata&hash=${hash}`,
           dataType: "json",
-          success : function (data) {
-            self.newSongInfo.imgUrl = data.imgUrl.replace("{size}","200");
-            self.newSongInfo.musicUrl = data.url;
-            self.newSongInfo.filename = data.fileName;
+          success : function (res) {
+            self.newSongInfo.imgUrl = res.data.img;
+            self.newSongInfo.musicUrl = res.data.play_url;
+            self.newSongInfo.filename = res.data.audio_name;
+            self.newSongInfo.hash = hash;
 
 
             self.postNewInfo(index,self.newSongInfo);
@@ -275,9 +284,11 @@
           "song_name":newSongInfo.filename.split("-")[1],"audio_name":newSongInfo.filename.split("-")[0]});
         this.$root.$emit("showMini",true);
         this.$root.$emit("index",index);
+        this.$root.$emit("hash",newSongInfo.hash);
         this.$root.$emit("component", "new");
 
-      }
+      },
+
 
     }
   }

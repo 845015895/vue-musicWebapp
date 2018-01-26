@@ -261,6 +261,7 @@
             self.$root.$emit("data", res.data);
             self.$root.$emit("index", index);
             self.$root.$emit("component", "search");
+            self.$root.$emit("hash",hash);
             let audio = new Audio();
             audio.load();
           },

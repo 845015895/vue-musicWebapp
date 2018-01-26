@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <img src="./assets/player_logo1.png" alt="" class="player_logo">
     <header-bar></header-bar>
     <tab-bar>
       <tab-item v-bind:class="{active:isActive1}" id="tab1" >推荐音乐</tab-item>
@@ -99,5 +100,12 @@
     color: #d43c33;
     box-sizing: border-box;
     border-bottom: px(4) solid #d43c33;
+  }
+  .player_logo {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    z-index: -100;
+    filter: alpha(opacity=0);
   }
 </style>

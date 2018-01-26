@@ -179,6 +179,9 @@
           if (self.indexObj.index >= self.songList.length) {
             self.indexObj.index = 0;
           }
+          if (self.indexObj.index < 0) {
+            self.indexObj.index = self.songList.length - 1;
+          }
           self.showMiniRadio(self.indexObj.index);
         }
       });
@@ -218,6 +221,7 @@
             self.$root.$emit("data", res.data);
             self.$root.$emit("index", index);
             self.$root.$emit("component", "hot");
+            self.$root.$emit("hash",self.musicId);
             let audio = new Audio();
             audio.load();
           },
