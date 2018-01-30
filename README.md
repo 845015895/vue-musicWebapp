@@ -1,20 +1,47 @@
-# webapp
+# 酸橙音乐-音乐播放器webapp
 
-> A Vue.js project
+> vuejs写的一个仿照网易云音webapp的音乐播放器
 
-## Build Setup
+## 截图
+
+推荐音乐：
+
+![推荐音乐](./musicImg/1.PNG)
+
+最新音乐：
+
+![最新音乐](./musicImg/2.PNG)
+
+热歌榜：
+
+![热歌榜](./musicImg/3.PNG)
+
+音乐搜索：
+
+![音乐搜索](./musicImg/4.PNG)
+
+音乐播放页面：
+
+![音乐搜索](./musicImg/5.PNG)
+
+
+## 使用说明
 
 ``` bash
 # install dependencies
+
 npm install
 
 # serve with hot reload at localhost:8080
+
 npm run dev
 
 # build for production with minification
+
 npm run build
 
 # build for production and view the bundle analyzer report
+
 npm run build --report
 ```
 
