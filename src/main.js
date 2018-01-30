@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {Range,Spinner } from 'mint-ui';
+import {Spinner } from 'mint-ui';
 
-Vue.component(Range.name, Range);
+// Vue.component(Range.name, Range);
 Vue.component(Spinner.name, Spinner);
 
 

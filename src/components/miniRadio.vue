@@ -320,6 +320,7 @@
     import $ from "jquery";
     import music from "../assets/music.mp3";
     import resize from "../tools/resize";
+    import mtRange from "../components/range/index.vue"
 
     export default {
         data() {
@@ -350,6 +351,9 @@
                 audio: ""
 
             }
+        },
+        components: {
+            mtRange
         },
         created() {
 

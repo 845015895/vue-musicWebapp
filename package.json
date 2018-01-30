@@ -18,6 +18,7 @@
     "vconsole-webpack-plugin": "^1.1.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "yzc-mint-ui": "^2.2.13",
     "zepto": "^1.2.0"
   },
   "devDependencies": {
@@ -75,7 +76,8 @@
   "keywords": [
     "音乐播放器",
     "music",
-    "vue.webapp"
+    "vue",
+    "webapp"
   ],
   "license": "MIT",
   "bugs": {

@@ -28,6 +28,9 @@
 </template>
 <style lang="scss">
   @import "../scss/size";
+  .recommend {
+      padding-bottom: px(76);
+  }
 
   .loadingBar{
     width: px(50);
