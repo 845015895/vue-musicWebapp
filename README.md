@@ -32,6 +32,8 @@ vue-router
 
 mint-ui
 
+借用[酷狗音乐api](http://blog.yizicheng.cn/%E9%85%B7%E7%8B%97%E9%9F%B3%E4%B9%90api%E6%8E%A5%E5%8F%A3)
+
 
 ## 在线预览
 
