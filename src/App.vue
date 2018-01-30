@@ -92,7 +92,8 @@
   }
 
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    max-width: px(375);
+      margin: 0 auto;
 
   }
 
