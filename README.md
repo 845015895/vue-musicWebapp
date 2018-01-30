@@ -24,6 +24,26 @@
 
 ![音乐搜索](./musicImg/5.PNG)
 
+#### 技术栈：
+
+vue
+
+vue-router
+
+mint-ui
+
+
+## 在线预览
+
+[酸橙音乐](http://musicapp.yizicheng.cn)
+
+扫码预览：
+
+![二维码](./musicImg/6.PNG)
+
+
+
+
 
 ## 使用说明
 
