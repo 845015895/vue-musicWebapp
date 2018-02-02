@@ -246,7 +246,7 @@
             self.songList = self.data.list;
 
             for(let i = 0;i<self.songList.length;i++){
-              if(self.songList[i].filename.indexOf("【")){
+              if(self.songList[i].filename.indexOf("【")  !== -1){
                 self.songList[i].filename=self.songList[i].filename.replace("【","(");
                 self.songList[i].filename=self.songList[i].filename.replace("】",")");
                 self.songList[i].songName =  self.songList[i].filename.split("-")[1].split("(")[0];
