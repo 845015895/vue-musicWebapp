@@ -24,14 +24,15 @@ app.all('*', function (req, res, next) {
 
 
 // 查询排行榜
-app.get('/rank', function (req, res) {
+app.get('/api/rank', function (req, res) {
     let obj = urlLib.parse(req.url, true);
     const GET = obj.query;
 
     let rankId = GET.rankid;
+    let page = GET.page;
     let mainData = "";
 
-    http.get(`http://m.kugou.com/rank/info/?rankid=${rankId}&page=1&json=true`,function (req1,res1) {
+    http.get(`http://m.kugou.com/rank/info/?rankid=${rankId}&page=${page}&json=true`,function (req1,res1) {
         req1.on('data',function(data){
             mainData += data;
         });
@@ -46,13 +47,14 @@ app.get('/rank', function (req, res) {
 });
 
 // 搜索音乐
-app.get('/search', function (req, res) {
+app.get('/api/search', function (req, res) {
     let obj = urlLib.parse(req.url, true);
     const GET = obj.query;
 
     let keyword =encodeURIComponent(GET.keyword) ;
+    let page = GET.page;
     let mainData = "";
-    http.get(`http://songsearch.kugou.com//song_search_v2?keyword=${keyword}&page=1&clientver=&platform=WebFilter`,function (req1,res1) {
+    http.get(`http://songsearch.kugou.com/song_search_v2?keyword=${keyword}&page=${page}&clientver=&platform=WebFilter`,function (req1,res1) {
 
         req1.on('data',function(data){
             mainData += data;
@@ -68,7 +70,7 @@ app.get('/search', function (req, res) {
 });
 
 // 获取音乐
-app.get('/music', function (req, res) {
+app.get('/api/music', function (req, res) {
     let obj = urlLib.parse(req.url, true);
     const GET = obj.query;
 
@@ -86,12 +88,78 @@ app.get('/music', function (req, res) {
         });
     });
 });
+app.get('/api/hotSearch', function (req, res) {
+    let obj = urlLib.parse(req.url, true);
+    const GET = obj.query;
+    let time = GET.time;
+    let mainData = "";
+    http.get(`http://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg?g_tk=5381&uin=0&format=jso&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=${time}`,function (req1,res1) {
+        req1.on('data',function(data){
+            mainData += data;
+        });
+        req1.on('end',function(){
+            res.send(mainData);
+        });
+        req1.on('error',function(){
+            res.send("请求失败");
+        });
+    });
+});
+app.get('/api/rankList', function (req, res) {
+    let obj = urlLib.parse(req.url, true);
+    const GET = obj.query;
+    let time = GET.time;
+    let mainData = "";
+    http.get(`http://m.kugou.com/rank/list&json=true`,function (req1,res1) {
+        req1.on('data',function(data){
+            mainData += data;
+        });
+        req1.on('end',function(){
+            res.send(mainData);
+        });
+        req1.on('error',function(){
+            res.send("请求失败");
+        });
+    });
+});
+app.get('/api/singerList', function (req, res) {
+    let obj = urlLib.parse(req.url, true);
+    const GET = obj.query;
+    let mainData = "";
+    http.get(`http://m.kugou.com/singer/list/88?json=true`,function (req1,res1) {
+        req1.on('data',function(data){
+            mainData += data;
+        });
+        req1.on('end',function(){
+            res.send(mainData);
+        });
+        req1.on('error',function(){
+            res.send("请求失败");
+        });
+    });
+});
+app.get('/api/slider', function (req, res) {
+    let obj = urlLib.parse(req.url, true);
+    const GET = obj.query;
+    let mainData = "";
+    http.get(`http://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=1928093487&inCharset=utf-8&outCharset=utf-8&notice=0&format=jsonp&platform=h5&uin=0&needNewCode=1`,function (req1,res1) {
+        req1.on('data',function(data){
+            mainData += data;
+        });
+        req1.on('end',function(){
+            res.json(JSON.parse(mainData).data.slider);
+        });
+        req1.on('error',function(){
+            res.json("请求失败");
+        });
+    });
+});
 
 
 
 
 //配置服务端口
-let server = app.listen(8888, function () {
+let server = app.listen(7100, function () {
     let host = server.address().address;
     let port = server.address().port;
     console.log('listening at http://%s:%s', host, port);

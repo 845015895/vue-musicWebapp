@@ -8,21 +8,34 @@
 
 ![推荐音乐](./musicImg/1.PNG)
 
-最新音乐：
+排行榜：
 
-![最新音乐](./musicImg/2.PNG)
+![排行榜](./musicImg/2.PNG)
 
-热歌榜：
+榜单详情：
 
-![热歌榜](./musicImg/3.PNG)
+![榜单详情](./musicImg/3.PNG)
 
-音乐搜索：
+热门歌手：
 
-![音乐搜索](./musicImg/4.PNG)
+![热门歌手](./musicImg/4.PNG)
 
-音乐播放页面：
+歌手音乐列表：
 
-![音乐搜索](./musicImg/5.PNG)
+![歌手音乐列表](./musicImg/5.PNG)
+
+搜索：
+
+![搜索](./musicImg/6.PNG)
+
+搜索结果：
+
+![搜索结果](./musicImg/7.PNG)
+播放界面：
+
+![播放界面](./musicImg/8.PNG)
+
+
 
 #### 技术栈：
 
@@ -49,7 +62,13 @@ mint-ui
 
 ## 使用说明
 
+
 ``` bash
+
+前后端分离
+
+
+前端：
 # install dependencies
 
 npm install
@@ -65,6 +84,15 @@ npm run build
 # build for production and view the bundle analyzer report
 
 npm run build --report
+
+
+后端：
+# 进入node文件夹，运行node接口：
+npm install
+
+cd api
+
+node api.js
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

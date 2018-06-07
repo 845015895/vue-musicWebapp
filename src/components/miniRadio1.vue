@@ -22,49 +22,47 @@
             </div>
         </div>
         <div class="mainBar" v-show="!isMini" :style="{backgroundImage:`url(${singerImg})`,backgroundSize:`cover`}">
-            <div class="overflow">
-                <div class="goBack" v-on:click="goBack()">
-                    <div class="goBackImg"></div>
-                    <div class="musicName">{{songName}}</div>
-                </div>
-                <div class="outLine" id="outLine">
-                    <div class="mainSingerImg" :style="{backgroundImage:`url(${singerImg})`,backgroundSize:`cover`}"></div>
-                </div>
+            <div class="overflow"></div>
+            <div class="goBack" v-on:click="goBack()">
+                <div class="goBackImg"></div>
+                <div class="musicName">{{songName}}</div>
+            </div>
+            <div class="outLine" id="outLine">
+                <div class="mainSingerImg" :style="{backgroundImage:`url(${singerImg})`,backgroundSize:`cover`}"></div>
+            </div>
 
 
-                <div class="lyrics">
-                    <div class="lyricsBar">
-                        <p v-for="(item,index) in lyrics" v-bind:class="{light:isLight===index}">{{item.lyricsStr}}</p>
-                    </div>
+            <div class="lyrics">
+                <div class="lyricsBar">
+                    <p v-for="(item,index) in lyrics" v-bind:class="{light:isLight===index}">{{item.lyricsStr}}</p>
                 </div>
-                <div class="process" id="process">
-                    <mt-range
-                        :bar-height="2"
-                        v-model="audio.currentTime"
-                        :min="0"
-                        :max="duration"
-                        :step="1"
-                        disabled
-                        v-on:click.native="rangeChange($event)"
-                    >
-                        <div slot="start" class="start">{{playTime}}</div>
-                        <div slot="end" class="end">{{allTime}}</div>
-                    </mt-range>
-                </div>
-                <!--<div id="progress">-->
-                <!--&lt;!&ndash;创建加载进度条&ndash;&gt;-->
-                <!--<span id="bar">-->
-                <!--&lt;!&ndash;创建控制点&ndash;&gt;-->
-                <!--<div id="control"></div>-->
-                <!--</span>-->
-                <!--</div>-->
-                <div class="audioTool">
-                    <div class="skipBtn back" v-on:click="back()"></div>
-                    <div class="btn playBtn" v-show="!isPlaying" v-on:click="play()" id="mainPlayBtn"></div>
-                    <div class="btn pauseBtn" v-show="isPlaying" v-on:click="stop()"></div>
-                    <div class="skipBtn next" v-on:click="next()"></div>
-                </div>
-
+            </div>
+            <div class="process" id="process">
+                <mt-range
+                    :bar-height="2"
+                    v-model="audio.currentTime"
+                    :min="0"
+                    :max="duration"
+                    :step="1"
+                    disabled
+                    v-on:click.native="rangeChange($event)"
+                >
+                    <div slot="start" class="start">{{playTime}}</div>
+                    <div slot="end" class="end">{{allTime}}</div>
+                </mt-range>
+            </div>
+            <!--<div id="progress">-->
+            <!--&lt;!&ndash;创建加载进度条&ndash;&gt;-->
+            <!--<span id="bar">-->
+            <!--&lt;!&ndash;创建控制点&ndash;&gt;-->
+            <!--<div id="control"></div>-->
+            <!--</span>-->
+            <!--</div>-->
+            <div class="audioTool">
+                <div class="skipBtn back" v-on:click="back()"></div>
+                <div class="btn playBtn" v-show="!isPlaying" v-on:click="play()" id="mainPlayBtn"></div>
+                <div class="btn pauseBtn" v-show="isPlaying" v-on:click="stop()"></div>
+                <div class="skipBtn next" v-on:click="next()"></div>
             </div>
 
         </div>
@@ -161,14 +159,13 @@
             .overflow {
                 width: 100%;
                 height: 100%;
-                transition: height 0.5s;
                 position: fixed;
                 background-color: rgba(0, 0, 0, .6);
                 left: 0;
                 top: 0;
-                z-index: 1;
-                /*-webkit-filter: blur(5px); !* Chrome, Safari, Opera *!*/
-                /*filter: blur(5px);*/
+                z-index: -1;
+                -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
+                filter: blur(5px);
             }
 
             .goBack {
@@ -184,7 +181,6 @@
                     background-size: cover;
                 }
                 .musicName {
-
                 }
 
             }
@@ -201,7 +197,7 @@
                 box-sizing: border-box;
                 background: url("../assets/disc.png") no-repeat;
                 background-size: cover;
-                margin: px(20) auto;
+                margin: px(30) auto;
                 border-radius: 100%;
                 animation: play 5s linear infinite;
 
@@ -358,9 +354,7 @@
                 playTime: "00:00",
                 currentTime: 0,
                 touch: false,
-                audio: "",
-                playList:[],
-                isSearch: false
+                audio: ""
 
             }
         },
@@ -368,35 +362,53 @@
             mtRange
         },
         created() {
-            let self = this;
-//            this.$root.$on("index", function (index) {
-//                self.playList = JSON.parse(localStorage.getItem("_playList"));
-//                self.currentIndex = index;
-//                self.getMusic();
-//            });
-            this.$root.$on("component", function (component) {
 
-                if(component === "search"){
-                    self.isSearch = true;
-                }else{
-                    self.isSearch = false;
-                }
+            let self = this;
+            this.$root.$on("index", function (index) {
+                self.currentIndex = index;
+            });
+            this.$root.$on("songList", function (songList) {
+                self.songList = songList;
+            });
+
+            this.$root.$on("component", function (component) {
+                self.component = component;
             });
             this.$root.$on("showMini", function (showMini) {
                 self.showMini = showMini;
-                self.playList = JSON.parse(localStorage.getItem("_playList"));
-                self.currentIndex = Number(localStorage.getItem("_index"));
-                self.getMusic();
+            });
+            this.$root.$on("index", function (index) {
+                self.index = index;
             });
             this.$root.$on("showMain", function (showMain) {
                 self.isMini = showMain;
             });
+            this.$root.$on("hash", function (hash) {
+                $.ajax({
+                    type: "get",
+                    url: `/music?hash=${hash}`,
+                    dataType: "json",
+                    success: function (res) {
+                        let lyricsTemp = res.data.lyrics.split("\r\n");
+                        self.lyrics = [];
+                        self.render(lyricsTemp);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
 
-        },
-        activated(){
-            this.playList = JSON.parse(localStorage.getItem("_playList"));
-            this.currentIndex = localStorage.getItem("_index");
-            this.getMusic();
+
+            });
+            this.$root.$on("data", function (data) {
+                self.musicUrl = data.play_url;
+                self.singerImg = data.img;
+                self.songName = data.song_name;
+                self.authorName = data.audio_name.split("-")[0];
+//
+            });
+
+
         },
         mounted: function () {
             let self = this;
@@ -446,35 +458,6 @@
             goBack: function () {
                 this.isMini = true;
             },
-            getMusic(){
-                let self = this;
-                let hash = "";
-                if(self.isSearch){
-                     hash = self.playList[self.currentIndex].Grp ? self.playList[self.currentIndex].FileHash : self.playList[self.currentIndex].Grp[0].Filehash ;
-                }else{
-                     hash = self.playList[self.currentIndex].hash;
-                }
-                $.ajax({
-                    type: "get",
-                    url: `/api/music?hash=${hash}`,
-                    dataType: "json",
-                    success: function (res) {
-                        let lyricsTemp = res.data.lyrics.split("\r\n");
-                        self.lyrics = [];
-                        self.render(lyricsTemp);
-                        let data = res.data;
-                        self.musicUrl = data.play_url;
-                        self.singerImg = data.img;
-                        self.songName = data.song_name;
-                        self.authorName = data.audio_name.split("-")[0];
-                        localStorage.setItem("_palying",JSON.stringify(data));
-                        self.play();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            },
             play: function () {
                 let audio = document.querySelector('#audio');
                 if (!this.isPlaying) {
@@ -498,19 +481,39 @@
 
                 let self = this;
                 ++self.currentIndex;
-                if(self.currentIndex === self.playList.length){
-                    self.currentIndex = 0;
+                switch (self.component) {
+                    case "hot":
+                        this.$root.$emit("indexData", {"component": "hot", "index": self.currentIndex});
+                        break;
+                    case "soar":
+                        this.$root.$emit("indexData", {"component": "soar", "index": self.currentIndex});
+                        break;
+                    case "new":
+                        this.$root.$emit("indexData", {"component": "new", "index": self.currentIndex});
+                        break;
+                    case "search":
+                        this.$root.$emit("indexData", {"component": "search", "index": self.currentIndex});
+                        break;
                 }
-                this.getMusic();
 
             },
             back: function () {
                 let self = this;
                 --self.currentIndex;
-                if(self.currentIndex < 0){
-                    self.currentIndex = self.playList.length-1;
+                switch (self.component) {
+                    case "hot":
+                        this.$root.$emit("indexData", {"component": "hot", "index": self.currentIndex});
+                        break;
+                    case "soar":
+                        this.$root.$emit("indexData", {"component": "soar", "index": self.currentIndex});
+                        break;
+                    case "new":
+                        this.$root.$emit("indexData", {"component": "new", "index": self.currentIndex});
+                        break;
+                    case "search":
+                        this.$root.$emit("indexData", {"component": "search", "index": self.currentIndex});
+                        break;
                 }
-                this.getMusic();
 
             },
 //      canPlay: function () {
@@ -526,10 +529,20 @@
                 self.isPlaying = false;
                 audio.currentTime = 0;
                 ++self.currentIndex;
-                if(self.currentIndex === self.playList.length){
-                    self.currentIndex = 0;
+                switch (self.component) {
+                    case "hot":
+                        this.$root.$emit("indexData", {"component": "hot", "index": self.currentIndex});
+                        break;
+                    case "soar":
+                        this.$root.$emit("indexData", {"component": "soar", "index": self.currentIndex});
+                        break;
+                    case "new":
+                        this.$root.$emit("indexData", {"component": "new", "index": self.currentIndex});
+                        break;
+                    case "search":
+                        this.$root.$emit("indexData", {"component": "search", "index": self.currentIndex});
+                        break;
                 }
-                self.getMusic();
             },
             render: function (lyrics) {
                 let pattern = /\[\d{2}:\d{2}.\d{2}\]/g;

@@ -11,37 +11,43 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+        '/': {
+              target: 'http://192.168.1.73:8888',
+              changeOrigin: true,
+              pathRewrite: {
+                '^/': '/'
+              },
       //获取排行榜
-      '/rank': {
-        target: 'http://m.kugou.com',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/rank': '/rank'
-        },
-      },
-      //获取单首音乐
-      '/app/i': {
-        target: ' http://m.kugou.com',
-        changeOrigin:true,
-        pathRewrite: {
-          '^/app/i': '/app/i'
-        }
-      },
-      //搜索音乐
-      '/song_search_v2': {
-        target: ' http://songsearch.kugou.com',
-        changeOrigin:true,
-        pathRewrite: {
-          '^/song_search_v2': '/song_search_v2'
-        }
-      },
-      //获取音乐地址
-      '/yy': {
-        target: ' http://www.kugou.com',
-        changeOrigin:true,
-        pathRewrite: {
-          '^/yy': '/yy'
-        }
+      // '/rank': {
+      //   target: 'http://m.kugou.com',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/rank': '/rank'
+      //   },
+      // },
+      // //获取单首音乐
+      // '/app/i': {
+      //   target: ' http://m.kugou.com',
+      //   changeOrigin:true,
+      //   pathRewrite: {
+      //     '^/app/i': '/app/i'
+      //   }
+      // },
+      // //搜索音乐
+      // '/song_search_v2': {
+      //   target: ' http://songsearch.kugou.com',
+      //   changeOrigin:true,
+      //   pathRewrite: {
+      //     '^/song_search_v2': '/song_search_v2'
+      //   }
+      // },
+      // //获取音乐地址
+      // '/yy': {
+      //   target: ' http://www.kugou.com',
+      //   changeOrigin:true,
+      //   pathRewrite: {
+      //     '^/yy': '/yy'
+      //   }
       },
     },
     // Various Dev Server settings

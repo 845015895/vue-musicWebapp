@@ -3,11 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {Spinner } from 'mint-ui';
+import {Spinner,IndexList, IndexSection } from 'mint-ui';
 
 // Vue.component(Range.name, Range);
 Vue.component(Spinner.name, Spinner);
-
+Vue.component(IndexList.name, IndexList);
+Vue.component(IndexSection.name, IndexSection);
 
 Vue.config.productionTip = false
 
