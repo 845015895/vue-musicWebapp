@@ -30,10 +30,10 @@
 
 搜索结果：
 
-![搜索结果](./musicImg/7.PNG)
+![搜索结果](./musicImg/7.png)
 播放界面：
 
-![播放界面](./musicImg/8.PNG)
+![播放界面](./musicImg/8.png)
 
 
 
@@ -54,7 +54,7 @@ mint-ui
 
 扫码预览：
 
-![二维码](./musicImg/6.PNG)
+![二维码](./musicImg/9.png)
 
 
 
