@@ -1,6 +1,6 @@
 # 酸橙音乐-音乐播放器webapp
 
-> vuejs写的一个仿照网易云音webapp的音乐播放器
+> vuejs写的一个音乐播放器webapp
 
 ## 截图
 
