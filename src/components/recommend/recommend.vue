@@ -325,7 +325,6 @@
             getSlider(){
                 let self = this;
                 $.get("/api/slider",function (data) {
-                    console.log(data);
                     self.sliderList = data;
                 })
             }

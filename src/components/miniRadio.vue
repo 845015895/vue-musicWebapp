@@ -556,7 +556,6 @@
                 let offset = event.offsetX;
                 let rangeWidth = document.querySelector("#process").offsetWidth - 70;
                 let clickLength = Math.floor(offset * audio.duration / rangeWidth);
-                console.log("offset" + offset);
                 if (offset < rangeWidth) {
                     audio.currentTime = clickLength;
                 }

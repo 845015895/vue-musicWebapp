@@ -12,9 +12,6 @@
                     <div class="playBtn" v-on:click=" showMiniRadio(0)">播放全部</div>
                     <div class="updateDate">更新日期：{{date}}</div>
                 </div>
-
-
-
             </div>
         </div>
         <div class="musicListBar">
